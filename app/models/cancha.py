@@ -1,13 +1,7 @@
 from datetime import datetime
 from uuid import UUID
 
-from sqlalchemy import (
-    Boolean,
-    DateTime,
-    ForeignKey,
-    String,
-    text
-)
+from sqlalchemy import DateTime, String, Text, text
 
 from sqlalchemy.dialects.postgresql import UUID as PG_UUID
 
@@ -28,32 +22,14 @@ class Canchas(Base):
     )
 
 
-    estadio_id: Mapped[UUID] = mapped_column(
-        ForeignKey("estadios.id"),
-        nullable=False
-    )
-
-
     nombre: Mapped[str] = mapped_column(
         String(100),
         nullable=False
     )
 
-
-    tipo_superficie: Mapped[str | None] = mapped_column(
-        String(30)
-    )
-
-
-    iluminacion: Mapped[bool] = mapped_column(
-        Boolean,
-        server_default=text("false")
-    )
-
-
-    habilitada: Mapped[bool] = mapped_column(
-        Boolean,
-        server_default=text("true")
+    descripcion: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True,
     )
 
 
@@ -66,11 +42,6 @@ class Canchas(Base):
     # =========================
     # Relaciones
     # =========================
-
-    estadio = relationship(
-        "Estadios",
-        back_populates="canchas"
-    )
 
     partidos = relationship(
         "Partidos",

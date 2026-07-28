@@ -34,6 +34,11 @@ class Estadios(Base):
         ForeignKey("ciudades.id")
     )
 
+    cancha_id: Mapped[UUID | None] = mapped_column(
+        ForeignKey("canchas.id"),
+        nullable=True,
+    )
+
     capacidad: Mapped[int | None] = mapped_column(Integer)
 
     latitud: Mapped[Decimal | None] = mapped_column(
@@ -59,8 +64,7 @@ class Estadios(Base):
         back_populates="estadios"
     )
 
-    canchas = relationship(
+    cancha = relationship(
         "Canchas",
-        back_populates="estadio",
-        cascade="all,delete-orphan",
+        foreign_keys=[cancha_id],
     )

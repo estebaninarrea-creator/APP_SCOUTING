@@ -1,6 +1,7 @@
 from datetime import date
 from uuid import uuid4
 
+from app.models.cancha import Canchas
 from app.database import SessionLocal
 from app.models.categoria import Categorias
 from app.models.ciudad import Ciudades
@@ -58,39 +59,49 @@ def _build_estadio_for_cancha_test() -> dict[str, str]:
         db.add(club)
         db.flush()
 
-        estadio = Estadios(club_id=club.id, nombre=f"Estadio Cancha {suffix}", ciudad_id=ciudad.id)
+        cancha = Canchas(nombre=f"Cesped sintetico {suffix}", descripcion="Cancha principal de prueba")
+        db.add(cancha)
+        db.flush()
+
+        estadio = Estadios(club_id=club.id, nombre=f"Estadio Cancha {suffix}", ciudad_id=ciudad.id, cancha_id=cancha.id)
         db.add(estadio)
         db.commit()
 
-        return {"estadio_id": str(estadio.id)}
+        return {"estadio_id": str(estadio.id), "cancha_id": str(cancha.id)}
     finally:
         db.close()
 
 
-def test_cannot_create_second_cancha_for_same_estadio(client):
+def test_cancha_catalog_can_be_created_without_estadio(client):
+    response = client.post(
+        "/canchas/",
+        json={
+            "nombre": f"Cesped natural {uuid4().hex[:6]}",
+            "descripcion": "Catalogo de tipo de cancha",
+        },
+    )
+    assert response.status_code == 201
+    body = response.json()
+    assert body["nombre"]
+    assert "estadio_id" not in body
+
+
+def test_estadio_can_store_cancha_relation(client):
     entities = _build_estadio_for_cancha_test()
 
-    first = client.post(
-        "/canchas/",
-        json={
-            "estadio_id": entities["estadio_id"],
-            "nombre": "Cancha Principal",
-            "tipo_superficie": "cesped natural",
-            "iluminacion": True,
-            "habilitada": True,
-        },
-    )
-    assert first.status_code == 201
+    response = client.get(f"/estadios/{entities['estadio_id']}")
+    assert response.status_code == 200
+    assert response.json()["cancha_id"] == entities["cancha_id"]
 
-    second = client.post(
-        "/canchas/",
+
+def test_estadio_rejects_invalid_cancha_id(client):
+    entities = _build_estadio_for_cancha_test()
+
+    response = client.put(
+        f"/estadios/{entities['estadio_id']}",
         json={
-            "estadio_id": entities["estadio_id"],
-            "nombre": "Cancha 2",
-            "tipo_superficie": "tierra",
-            "iluminacion": False,
-            "habilitada": True,
+            "cancha_id": str(uuid4()),
         },
     )
-    assert second.status_code == 400
-    assert "Ya existe una cancha para este estadio" in second.json()["detail"]
+    assert response.status_code == 400
+    assert response.json()["detail"] == "La cancha seleccionada no existe."

@@ -10,6 +10,7 @@ class EstadioBase(BaseModel):
     nombre: str = Field(..., min_length=1, max_length=150)
     direccion: str | None = Field(None, max_length=200)
     ciudad_id: UUID | None = None
+    cancha_id: UUID | None = None
     capacidad: int | None = Field(None, ge=0)
     latitud: Decimal | None = Field(
         None,
@@ -30,6 +31,7 @@ class EstadioUpdate(BaseModel):
     nombre: str | None = Field(None, min_length=1, max_length=150)
     direccion: str | None = Field(None, max_length=200)
     ciudad_id: UUID | None = None
+    cancha_id: UUID | None = None
     capacidad: int | None = Field(None, ge=0)
     latitud: Decimal | None = Field(
         None,

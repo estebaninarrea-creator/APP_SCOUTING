@@ -5,11 +5,8 @@ from pydantic import BaseModel, ConfigDict, Field
 
 
 class CanchaBase(BaseModel):
-    estadio_id: UUID
     nombre: str = Field(..., min_length=1, max_length=100)
-    tipo_superficie: str | None = Field(None, max_length=30)
-    iluminacion: bool = False
-    habilitada: bool = True
+    descripcion: str | None = Field(None, max_length=1000)
 
 
 class CanchaCreate(CanchaBase):
@@ -17,11 +14,8 @@ class CanchaCreate(CanchaBase):
 
 
 class CanchaUpdate(BaseModel):
-    estadio_id: UUID | None = None
     nombre: str | None = Field(None, min_length=1, max_length=100)
-    tipo_superficie: str | None = Field(None, max_length=30)
-    iluminacion: bool | None = None
-    habilitada: bool | None = None
+    descripcion: str | None = Field(None, max_length=1000)
 
 
 class CanchaResponse(CanchaBase):
