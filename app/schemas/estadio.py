@@ -2,7 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 
 
 class EstadioBase(BaseModel):
@@ -11,8 +11,14 @@ class EstadioBase(BaseModel):
     direccion: str | None = Field(None, max_length=200)
     ciudad_id: UUID | None = None
     capacidad: int | None = Field(None, ge=0)
-    latitud: Decimal | None = None
-    longitud: Decimal | None = None
+    latitud: Decimal | None = Field(
+        None,
+        validation_alias=AliasChoices("latitud", "ancho"),
+    )
+    longitud: Decimal | None = Field(
+        None,
+        validation_alias=AliasChoices("longitud", "largo"),
+    )
 
 
 class EstadioCreate(EstadioBase):
@@ -25,8 +31,14 @@ class EstadioUpdate(BaseModel):
     direccion: str | None = Field(None, max_length=200)
     ciudad_id: UUID | None = None
     capacidad: int | None = Field(None, ge=0)
-    latitud: Decimal | None = None
-    longitud: Decimal | None = None
+    latitud: Decimal | None = Field(
+        None,
+        validation_alias=AliasChoices("latitud", "ancho"),
+    )
+    longitud: Decimal | None = Field(
+        None,
+        validation_alias=AliasChoices("longitud", "largo"),
+    )
 
 
 class EstadioResponse(EstadioBase):

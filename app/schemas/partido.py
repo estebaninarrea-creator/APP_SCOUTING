@@ -71,11 +71,17 @@ class PartidoBase(BaseModel):
 
 
 class PartidoCreate(PartidoBase):
-    pass
+    estado_manual: bool = Field(
+        False,
+        description="Cuando es true y se envía estado_id, fuerza el estado manual sin automatización",
+    )
 
 
 class PartidoUpdate(PartidoBase):
-    pass
+    estado_manual: bool | None = Field(
+        None,
+        description="Cuando es true y se envía estado_id, fuerza el estado manual sin automatización",
+    )
 
 
 class PartidoResponse(PartidoBase):

@@ -1,11 +1,14 @@
 import logging
+from datetime import date
 from uuid import UUID
 
 from fastapi import HTTPException, status
+from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.orm import Session
 
 from app.models.equipo import Equipos
+from app.models.estado import Estados
 from app.models.partido import Partidos
 from app.models.torneo import Torneos
 from app.models.torneo_club import TorneosClubes
@@ -22,6 +25,51 @@ def _map_partido_payload(payload: dict) -> dict:
     if "visitante_equipo_id" in payload:
         payload["equipo_visitante_id"] = payload.pop("visitante_equipo_id")
     return payload
+
+
+def _get_estado_id_by_priority(db: Session, names_by_priority: list[str]) -> UUID | None:
+    lowered = [name.lower() for name in names_by_priority]
+    estados = db.query(Estados).filter(func.lower(Estados.nombre).in_(lowered)).all()
+    by_name = {estado.nombre.lower(): estado.id for estado in estados}
+    for name in lowered:
+        if name in by_name:
+            return by_name[name]
+    return None
+
+
+def _resolve_estado_for_partido(
+    db: Session,
+    existing: Partidos | None,
+    payload: dict,
+    estado_manual: bool,
+    has_estado_in_payload: bool,
+) -> UUID | None:
+    if estado_manual:
+        if not has_estado_in_payload or not payload.get("estado_id"):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Cuando estado_manual=true debe enviarse estado_id",
+            )
+        return payload.get("estado_id")
+
+    if has_estado_in_payload:
+        return payload.get("estado_id")
+
+    estado_programado_id = _get_estado_id_by_priority(db, ["programado"])
+    estado_finalizado_id = _get_estado_id_by_priority(db, ["finalizado", "terminado"])
+    estado_suspendido_id = _get_estado_id_by_priority(db, ["suspendido"])
+
+    existing_estado_id = getattr(existing, "estado_id", None)
+    if existing_estado_id and estado_suspendido_id and existing_estado_id == estado_suspendido_id:
+        return existing_estado_id
+
+    fecha_partido = payload.get("fecha_partido", getattr(existing, "fecha_partido", None))
+    if fecha_partido:
+        if fecha_partido <= date.today():
+            return estado_finalizado_id or existing_estado_id or estado_programado_id
+        return estado_programado_id or existing_estado_id
+
+    return existing_estado_id or estado_programado_id
 
 
 def _validate_partido_relations(
@@ -155,6 +203,9 @@ def create_partido(db: Session, partido: PartidoCreate):
     logger.info(f"Creando nuevo partido")
     try:
         payload = _map_partido_payload(partido.model_dump())
+        has_estado_in_payload = payload.get("estado_id") is not None
+        estado_manual = bool(payload.pop("estado_manual", False))
+        payload["estado_id"] = _resolve_estado_for_partido(db, None, payload, estado_manual, has_estado_in_payload)
         torneo_id, equipo_local_id, equipo_visitante_id = _resolve_partido_relations(None, payload)
         _validate_partido_relations(db, torneo_id, equipo_local_id, equipo_visitante_id)
         nuevo = Partidos(**payload)
@@ -177,6 +228,9 @@ def update_partido(db: Session, partido_id: UUID, partido: PartidoUpdate):
             logger.warning(f"Partido no encontrado para actualizar: {partido_id}")
             return None
         payload = _map_partido_payload(partido.model_dump(exclude_unset=True))
+        has_estado_in_payload = payload.get("estado_id") is not None
+        estado_manual = bool(payload.pop("estado_manual", False))
+        payload["estado_id"] = _resolve_estado_for_partido(db, existing, payload, estado_manual, has_estado_in_payload)
         torneo_id, equipo_local_id, equipo_visitante_id = _resolve_partido_relations(existing, payload)
         _validate_partido_relations(db, torneo_id, equipo_local_id, equipo_visitante_id)
         for key, value in payload.items():

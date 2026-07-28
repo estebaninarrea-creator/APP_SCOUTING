@@ -97,6 +97,8 @@ Avance aplicado:
 - Regla de membresia `torneos_clubes` implementada en backend para Partidos con feature flag `ENFORCE_TORNEO_CLUB_MEMBERSHIP` (default `false` para no romper flujos actuales).
 - Regla de consistencia en `formacion_jugadores` implementada: valida que la formacion pertenezca a un equipo del partido y que el jugador integre un plantel activo para ese equipo/fecha.
 - Contratos automatizados P2 agregados y en verde en `tests/test_phase2_business_rules.py`.
+- Automatizacion de estado de partidos implementada por fecha con override manual explicito (`estado_manual` + `estado_id`) y preservacion de estado `Suspendido` cuando fue definido manualmente.
+- Contratos automatizados para estados de partidos agregados y en verde en `tests/test_partido_estado_automatico.py`.
 
 1. Definir si torneos_clubes debe condicionar la configuracion de partidos.
    - Opcion A: solo catalogo administrativo (sin bloqueo).
