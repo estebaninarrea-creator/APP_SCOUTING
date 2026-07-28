@@ -8,6 +8,8 @@ from sqlalchemy.orm import Session
 from app.models.equipo import Equipos
 from app.models.partido import Partidos
 from app.models.torneo import Torneos
+from app.models.torneo_club import TorneosClubes
+from app.config import settings
 from app.schemas.partido import PartidoCreate, PartidoUpdate
 
 logger = logging.getLogger(__name__)
@@ -92,6 +94,29 @@ def _validate_partido_relations(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="El equipo visitante no pertenece a la misma temporada y categoría del torneo",
         )
+
+    if not settings.ENFORCE_TORNEO_CLUB_MEMBERSHIP:
+        return
+
+    for team_id, team_label in (
+        (equipo_local_id, "local"),
+        (equipo_visitante_id, "visitante"),
+    ):
+        if not team_id:
+            continue
+        membership = (
+            db.query(TorneosClubes)
+            .filter(
+                TorneosClubes.torneo_id == torneo_id,
+                TorneosClubes.equipo_id == team_id,
+            )
+            .first()
+        )
+        if not membership:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"El equipo {team_label} no está registrado en torneos_clubes para el torneo indicado",
+            )
 
 
 def _resolve_partido_relations(existing: Partidos | None, payload: dict) -> tuple[UUID | None, UUID | None, UUID | None]:

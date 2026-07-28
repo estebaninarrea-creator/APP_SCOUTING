@@ -91,6 +91,13 @@ Criterio de salida P1:
 
 ### Fase P2 - Reglas de Negocio Pendientes (2 a 4 dias)
 
+Estado: iniciado (2026-07-28)
+
+Avance aplicado:
+- Regla de membresia `torneos_clubes` implementada en backend para Partidos con feature flag `ENFORCE_TORNEO_CLUB_MEMBERSHIP` (default `false` para no romper flujos actuales).
+- Regla de consistencia en `formacion_jugadores` implementada: valida que la formacion pertenezca a un equipo del partido y que el jugador integre un plantel activo para ese equipo/fecha.
+- Contratos automatizados P2 agregados y en verde en `tests/test_phase2_business_rules.py`.
+
 1. Definir si torneos_clubes debe condicionar la configuracion de partidos.
    - Opcion A: solo catalogo administrativo (sin bloqueo).
    - Opcion B: regla obligatoria (equipos del partido deben pertenecer al torneo en torneos_clubes).
