@@ -3,6 +3,13 @@ from decimal import Decimal
 from uuid import UUID
 
 from pydantic import AliasChoices, BaseModel, ConfigDict, Field
+from pydantic import field_validator
+
+
+def _normalize_dimension(value: Decimal | float | int | str | None) -> Decimal | None:
+    if value is None:
+        return None
+    return Decimal(str(value)).quantize(Decimal("0.1"))
 
 
 class EstadioBase(BaseModel):
@@ -20,6 +27,11 @@ class EstadioBase(BaseModel):
         None,
         validation_alias=AliasChoices("longitud", "largo"),
     )
+
+    @field_validator("latitud", "longitud", mode="before")
+    @classmethod
+    def normalize_dimensions(cls, value):
+        return _normalize_dimension(value)
 
 
 class EstadioCreate(EstadioBase):
@@ -41,6 +53,11 @@ class EstadioUpdate(BaseModel):
         None,
         validation_alias=AliasChoices("longitud", "largo"),
     )
+
+    @field_validator("latitud", "longitud", mode="before")
+    @classmethod
+    def normalize_dimensions(cls, value):
+        return _normalize_dimension(value)
 
 
 class EstadioResponse(EstadioBase):
