@@ -1,6 +1,7 @@
 from collections.abc import Generator
 from dataclasses import dataclass
 from dataclasses import field
+from datetime import date
 
 import pytest
 from fastapi.testclient import TestClient
@@ -10,6 +11,7 @@ from app.models.jugador import Jugadores
 from app.models.liga import Ligas
 from app.models.posicion import Posiciones
 from app.models.rol import Roles
+from app.models.temporada import Temporadas
 from app.models.usuario import Usuarios
 from app.dependencies import get_current_user
 from app.main import app
@@ -55,6 +57,18 @@ def bootstrap_minimum_test_data() -> Generator[None, None, None]:
         if not liga:
             liga = Ligas(nombre='Liga Test')
             db.add(liga)
+            db.flush()
+
+        temporada = db.query(Temporadas).filter(Temporadas.liga_id == liga.id).first()
+        if not temporada:
+            temporada = Temporadas(
+                liga_id=liga.id,
+                nombre='TEMP-TEST-CI',
+                fecha_inicio=date(2030, 1, 1),
+                fecha_fin=date(2030, 12, 31),
+                activa=False,
+            )
+            db.add(temporada)
 
         posicion = db.query(Posiciones).order_by(Posiciones.orden.asc()).first()
         if not posicion:
