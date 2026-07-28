@@ -49,12 +49,26 @@ Criterio de salida P0:
 
 ### Fase P1 - Cobertura Frontend Directa (4 a 7 dias)
 
+Estado: iniciado (2026-07-28)
+
+Avance aplicado:
+- Modulo Estados implementado en frontend con listado, alta, edicion y baja.
+- Control RBAC agregado para acceso administrativo en menu y ruta.
+- Prueba de humo frontend extendida para validar consulta de estados.
+- Modulo Paises integrado en Datos Maestros con CRUD completo.
+- Prueba de humo frontend extendida para validar `GET /maestros/paises`.
+- Modulo Estadios implementado en frontend con CRUD y seleccion de club/ciudad.
+- Navegacion y ruta protegida para Estadios agregadas con `admin:manage`.
+- Prueba de humo frontend extendida para validar `GET /estadios/`.
+- Modulo Canchas implementado en frontend con CRUD y seleccion de estadio.
+- Navegacion y ruta protegida para Canchas agregadas con `admin:manage`.
+- Prueba de humo frontend extendida para validar `GET /canchas/`.
+- Modulo Formaciones implementado en frontend con CRUD y seleccion de partido/equipo.
+- Navegacion y ruta protegida para Formaciones agregadas con `admin:manage`.
+- Prueba de humo frontend extendida para validar `GET /formaciones/`.
+
 Tablas con backend operativo pero sin tratamiento frontend directo actual:
-- canchas
-- estadios
-- estados
-- formaciones
-- paises
+- sin pendientes en alcance P1 definido
 
 Ejecucion recomendada por modulo (uno por vez):
 1. Listado y filtros.
