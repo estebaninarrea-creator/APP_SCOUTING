@@ -1,0 +1,33 @@
+{
+  "admin": [
+    "*"
+  ],
+  "scout": [
+    "dashboard:view",
+    "jugadores:view",
+    "partidos:view",
+    "planteles:view",
+    "torneos:view",
+    "scouting:view",
+    "scouts:view"
+  ],
+  "usuario": [
+    "dashboard:view",
+    "equipos:view",
+    "jugadores:view",
+    "partidos:view",
+    "planteles:view",
+    "torneos:view"
+  ],
+  "invitado": [
+    "dashboard:view"
+  ],
+  "entrenador": [
+    "dashboard:view",
+    "equipos:view",
+    "jugadores:view",
+    "partidos:view",
+    "planteles:view",
+    "torneos:view"
+  ]
+}

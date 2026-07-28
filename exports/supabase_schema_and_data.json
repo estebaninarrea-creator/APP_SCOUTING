@@ -1,0 +1,5292 @@
+{
+  "database": "postgres",
+  "schema": "public",
+  "tables": [
+    {
+      "name": "roles",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "descripcion",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "roles_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "roles_nombre_key",
+          "unique": true,
+          "column_names": [
+            "nombre"
+          ],
+          "duplicates_constraint": "roles_nombre_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "e49aa02e-47ca-4577-8d63-900494e947bc",
+          "nombre": "ADMIN",
+          "descripcion": "Administrador general del sistema",
+          "created_at": "2026-07-22 13:32:41.677164",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "18f8ae24-09ea-43e0-9a9e-9b782bcd4fa1",
+          "nombre": "SCOUT",
+          "descripcion": "Usuario encargado de realizar observaciones y evaluaciones",
+          "created_at": "2026-07-22 13:32:41.677164",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "088e0ca4-5217-49d0-95d9-2c429c367a69",
+          "nombre": "INVITADO",
+          "descripcion": "Usuario con acceso limitado",
+          "created_at": "2026-07-22 13:32:41.677164",
+          "updated_at": null,
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "name": "usuarios",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "rol_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "apellido",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(150)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "password_hash",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "usuarios_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_usuario_rol",
+          "constrained_columns": [
+            "rol_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "roles",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_usuario_activo",
+          "unique": false,
+          "column_names": [
+            "activo"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_usuario_nombre",
+          "unique": false,
+          "column_names": [
+            "apellido",
+            "nombre"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_usuarios_email",
+          "unique": false,
+          "column_names": [
+            "email"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "usuarios_email_key",
+          "unique": true,
+          "column_names": [
+            "email"
+          ],
+          "duplicates_constraint": "usuarios_email_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    },
+    {
+      "name": "provincias",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "pais_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "provincias_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_provincia_pais",
+          "constrained_columns": [
+            "pais_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "paises",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_provincia_pais",
+          "unique": false,
+          "column_names": [
+            "pais_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "d61adaa1-f8be-42c4-ace6-919a985f391e",
+          "pais_id": "390fc4e8-980f-44e9-a3fb-d65c06789113",
+          "nombre": "Buenos Aires",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "44644f49-97ca-4212-84b7-de8f237d79df",
+          "pais_id": "390fc4e8-980f-44e9-a3fb-d65c06789113",
+          "nombre": "La Pampa",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "4db7bcc3-85d4-43af-8977-05232b458459",
+          "pais_id": "390fc4e8-980f-44e9-a3fb-d65c06789113",
+          "nombre": "C\u00f3rdoba",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "3778afff-4d4d-4558-a7c8-6952cfc00c23",
+          "pais_id": "390fc4e8-980f-44e9-a3fb-d65c06789113",
+          "nombre": "Santa Fe",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "8e4328db-878f-4e39-b130-742221cd8c30",
+          "pais_id": "390fc4e8-980f-44e9-a3fb-d65c06789113",
+          "nombre": "Mendoza",
+          "created_at": "2026-07-22 13:32:41.677164"
+        }
+      ]
+    },
+    {
+      "name": "ciudades",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "provincia_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(120)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "codigo_postal",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "latitud",
+          "type": "NUMERIC(10, 7)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "longitud",
+          "type": "NUMERIC(10, 7)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "ciudades_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_ciudad_provincia",
+          "constrained_columns": [
+            "provincia_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "provincias",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_ciudad_provincia",
+          "unique": false,
+          "column_names": [
+            "provincia_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_ciudades_nombre",
+          "unique": false,
+          "column_names": [
+            "nombre"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "a3532c97-037a-47d0-a6d5-b9e1ecdf593e",
+          "provincia_id": "44644f49-97ca-4212-84b7-de8f237d79df",
+          "nombre": "Santa Rosa",
+          "codigo_postal": null,
+          "latitud": null,
+          "longitud": null,
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "b0127365-ecb6-41ba-93eb-81bf46d22ca2",
+          "provincia_id": "d61adaa1-f8be-42c4-ace6-919a985f391e",
+          "nombre": "Bah\u00eda Blanca",
+          "codigo_postal": null,
+          "latitud": null,
+          "longitud": null,
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "217553d7-d3c2-4e36-b7dc-06b3937782da",
+          "provincia_id": "d61adaa1-f8be-42c4-ace6-919a985f391e",
+          "nombre": "La Plata",
+          "codigo_postal": null,
+          "latitud": null,
+          "longitud": null,
+          "created_at": "2026-07-24 17:38:39.003936"
+        }
+      ]
+    },
+    {
+      "name": "ligas",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "comet_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(150)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "pais_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "provincia_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "logo_url",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "sitio_web",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(150)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "telefono",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "ligas_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_liga_pais",
+          "constrained_columns": [
+            "pais_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "paises",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_liga_provincia",
+          "constrained_columns": [
+            "provincia_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "provincias",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_liga_activa",
+          "unique": false,
+          "column_names": [
+            "activo"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_liga_pais",
+          "unique": false,
+          "column_names": [
+            "pais_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_liga_provincia",
+          "unique": false,
+          "column_names": [
+            "provincia_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_ligas_nombre",
+          "unique": false,
+          "column_names": [
+            "nombre"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "38da1368-20de-4790-b3bf-9d1534c6e3bf",
+          "comet_id": 10001,
+          "nombre": "Liga Cultural de La Pampa",
+          "pais_id": "390fc4e8-980f-44e9-a3fb-d65c06789113",
+          "provincia_id": "44644f49-97ca-4212-84b7-de8f237d79df",
+          "logo_url": null,
+          "sitio_web": "https://ligacultural.com/",
+          "email": "Ligacultural_lp@hotmail.com",
+          "telefono": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": "2026-07-24 13:51:38.513222",
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "name": "temporadas",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "liga_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha_inicio",
+          "type": "DATE",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha_fin",
+          "type": "DATE",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activa",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "false",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "temporadas_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_temporada_liga",
+          "constrained_columns": [
+            "liga_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "ligas",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_temporada_activa",
+          "unique": false,
+          "column_names": [
+            "activa"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_temporada_liga",
+          "unique": false,
+          "column_names": [
+            "liga_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_temporadas_nombre",
+          "unique": false,
+          "column_names": [
+            "nombre"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "uk_temporada",
+          "unique": true,
+          "column_names": [
+            "liga_id",
+            "nombre"
+          ],
+          "duplicates_constraint": "uk_temporada",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "eeed7023-6736-4353-a7ba-811a30976032",
+          "liga_id": "38da1368-20de-4790-b3bf-9d1534c6e3bf",
+          "nombre": "2026",
+          "fecha_inicio": "2026-03-01",
+          "fecha_fin": "2026-12-15",
+          "activa": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null
+        }
+      ]
+    },
+    {
+      "name": "torneos",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "comet_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "temporada_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "categoria_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "tipo_torneo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(150)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha_inicio",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha_fin",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "torneos_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_torneo_categoria",
+          "constrained_columns": [
+            "categoria_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "categorias",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_torneo_temporada",
+          "constrained_columns": [
+            "temporada_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "temporadas",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_torneo_tipo",
+          "constrained_columns": [
+            "tipo_torneo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "tipos_torneo",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_torneo_activo",
+          "unique": false,
+          "column_names": [
+            "activo"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_torneo_categoria",
+          "unique": false,
+          "column_names": [
+            "categoria_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_torneo_temporada",
+          "unique": false,
+          "column_names": [
+            "temporada_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_torneos_nombre",
+          "unique": false,
+          "column_names": [
+            "nombre"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "a04ee388-48d7-481a-88b5-0257f75f9579",
+          "comet_id": null,
+          "temporada_id": "eeed7023-6736-4353-a7ba-811a30976032",
+          "categoria_id": "d08286b8-5fa2-4547-a9a4-4160fcfd2e3c",
+          "tipo_torneo_id": "dc4adade-98ff-46bf-b611-857afc941bc8",
+          "nombre": "Primera Divisi\u00f3n 2026",
+          "fecha_inicio": null,
+          "fecha_fin": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "name": "categorias",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(60)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "edad_min",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "edad_max",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "sexo",
+          "type": "CHAR(1)",
+          "nullable": false,
+          "default": "'M'::bpchar",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "categorias_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "categorias_nombre_key",
+          "unique": true,
+          "column_names": [
+            "nombre"
+          ],
+          "duplicates_constraint": "categorias_nombre_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "d08286b8-5fa2-4547-a9a4-4160fcfd2e3c",
+          "nombre": "Primera Divisi\u00f3n",
+          "edad_min": 18,
+          "edad_max": 45,
+          "sexo": "M",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "79e74189-2d6e-44dc-8c73-448be65d97a0",
+          "nombre": "Reserva",
+          "edad_min": 18,
+          "edad_max": 23,
+          "sexo": "M",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "49c35f1b-9d42-4f24-84dc-56ec4557af3a",
+          "nombre": "Sub20",
+          "edad_min": 18,
+          "edad_max": 20,
+          "sexo": "M",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "2560a812-a8d7-49b7-9831-9b469332d317",
+          "nombre": "Sub17",
+          "edad_min": 15,
+          "edad_max": 17,
+          "sexo": "M",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "710f2dab-b47a-423c-9278-1cb169c77148",
+          "nombre": "Sub15",
+          "edad_min": 13,
+          "edad_max": 15,
+          "sexo": "M",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "b3642ad8-e7d0-44f6-8d98-416857b87dfb",
+          "nombre": "Femenino Primera",
+          "edad_min": 18,
+          "edad_max": 45,
+          "sexo": "F",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "28d23f15-d3e9-4891-94bc-2c6296dd479d",
+          "nombre": "Femenino Juvenil",
+          "edad_min": 13,
+          "edad_max": 18,
+          "sexo": "F",
+          "created_at": "2026-07-22 13:32:41.677164"
+        }
+      ]
+    },
+    {
+      "name": "tipos_torneo",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "tipos_torneo_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "tipos_torneo_nombre_key",
+          "unique": true,
+          "column_names": [
+            "nombre"
+          ],
+          "duplicates_constraint": "tipos_torneo_nombre_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "dc4adade-98ff-46bf-b611-857afc941bc8",
+          "nombre": "Liga",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "26f0b5da-743b-4371-abcf-562c377536e2",
+          "nombre": "Copa",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "e0df019b-ec40-4f91-8bab-bf63ca235a44",
+          "nombre": "Regional",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "832094e7-378f-4aed-9e8a-930d7b5305c1",
+          "nombre": "Provincial",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "ebc226ab-80c9-43bf-9306-118451339602",
+          "nombre": "Nacional",
+          "created_at": "2026-07-22 13:32:41.677164"
+        }
+      ]
+    },
+    {
+      "name": "usuarios_ligas",
+      "columns": [
+        {
+          "name": "usuario_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "liga_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "usuario_id",
+          "liga_id"
+        ],
+        "name": "usuarios_ligas_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_ul_liga",
+          "constrained_columns": [
+            "liga_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "ligas",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_ul_usuario",
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [],
+      "rows": []
+    },
+    {
+      "name": "clubes",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "comet_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(150)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre_corto",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "sigla",
+          "type": "VARCHAR(10)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "ciudad_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "direccion",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "telefono",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(150)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "sitio_web",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "escudo_url",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fundacion",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": false,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": false,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "clubes_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_club_ciudad",
+          "constrained_columns": [
+            "ciudad_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "ciudades",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_club_ciudad",
+          "unique": false,
+          "column_names": [
+            "ciudad_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_club_comet",
+          "unique": false,
+          "column_names": [
+            "comet_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_club_nombre",
+          "unique": true,
+          "column_names": [
+            "nombre"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "63cb7c0c-44f6-472d-99a9-e1655f26d685",
+          "comet_id": null,
+          "nombre": "Club Atl\u00e9tico La Barranca",
+          "nombre_corto": "La Barranca",
+          "sigla": "LAB",
+          "ciudad_id": "a3532c97-037a-47d0-a6d5-b9e1ecdf593e",
+          "direccion": null,
+          "telefono": null,
+          "email": null,
+          "sitio_web": null,
+          "escudo_url": null,
+          "fundacion": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "7f65959c-5f98-4c28-8c2e-6327ba499eb7",
+          "comet_id": null,
+          "nombre": "Club Atl\u00e9tico All Boys",
+          "nombre_corto": "All Boys",
+          "sigla": "ALB",
+          "ciudad_id": "a3532c97-037a-47d0-a6d5-b9e1ecdf593e",
+          "direccion": null,
+          "telefono": null,
+          "email": null,
+          "sitio_web": null,
+          "escudo_url": null,
+          "fundacion": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "eb02a646-dad6-4b51-88f9-c6b12ee40887",
+          "comet_id": null,
+          "nombre": "Club General Belgrano",
+          "nombre_corto": "Belgrano",
+          "sigla": "GB",
+          "ciudad_id": "a3532c97-037a-47d0-a6d5-b9e1ecdf593e",
+          "direccion": null,
+          "telefono": null,
+          "email": null,
+          "sitio_web": null,
+          "escudo_url": null,
+          "fundacion": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "name": "estadios",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "club_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(150)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "direccion",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "ciudad_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "capacidad",
+          "type": "INTEGER",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "latitud",
+          "type": "NUMERIC(10, 7)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "longitud",
+          "type": "NUMERIC(10, 7)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "estadios_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_estadio_ciudad",
+          "constrained_columns": [
+            "ciudad_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "ciudades",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_estadio_club",
+          "constrained_columns": [
+            "club_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "clubes",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [],
+      "rows": []
+    },
+    {
+      "name": "canchas",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "estadio_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "tipo_superficie",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "iluminacion",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "false",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "habilitada",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "canchas_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_cancha_estadio",
+          "constrained_columns": [
+            "estadio_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "estadios",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [],
+      "rows": []
+    },
+    {
+      "name": "equipos",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "club_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "temporada_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "categoria_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(150)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "director_tecnico",
+          "type": "VARCHAR(150)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "ayudante_tecnico",
+          "type": "VARCHAR(150)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "preparador_fisico",
+          "type": "VARCHAR(150)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "equipos_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_equipo_categoria",
+          "constrained_columns": [
+            "categoria_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "categorias",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_equipo_club",
+          "constrained_columns": [
+            "club_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "clubes",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_equipo_temporada",
+          "constrained_columns": [
+            "temporada_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "temporadas",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_equipo_busqueda",
+          "unique": false,
+          "column_names": [
+            "club_id",
+            "temporada_id",
+            "categoria_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_equipo_categoria",
+          "unique": false,
+          "column_names": [
+            "categoria_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_equipo_club",
+          "unique": false,
+          "column_names": [
+            "club_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_equipo_temporada",
+          "unique": false,
+          "column_names": [
+            "temporada_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "uk_equipo",
+          "unique": true,
+          "column_names": [
+            "club_id",
+            "temporada_id",
+            "categoria_id"
+          ],
+          "duplicates_constraint": "uk_equipo",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "5772ad18-b80e-4ef7-b9b2-ead75897350c",
+          "club_id": "63cb7c0c-44f6-472d-99a9-e1655f26d685",
+          "temporada_id": "eeed7023-6736-4353-a7ba-811a30976032",
+          "categoria_id": "d08286b8-5fa2-4547-a9a4-4160fcfd2e3c",
+          "nombre": "Primera 2026",
+          "director_tecnico": null,
+          "ayudante_tecnico": null,
+          "preparador_fisico": null,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null
+        },
+        {
+          "id": "1fca6d9d-3275-47fc-a8b3-90cdcaf13416",
+          "club_id": "7f65959c-5f98-4c28-8c2e-6327ba499eb7",
+          "temporada_id": "eeed7023-6736-4353-a7ba-811a30976032",
+          "categoria_id": "d08286b8-5fa2-4547-a9a4-4160fcfd2e3c",
+          "nombre": "Primera 2026",
+          "director_tecnico": null,
+          "ayudante_tecnico": null,
+          "preparador_fisico": null,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null
+        },
+        {
+          "id": "a3693c5b-3eed-4270-8e94-62f3b2d08da5",
+          "club_id": "eb02a646-dad6-4b51-88f9-c6b12ee40887",
+          "temporada_id": "eeed7023-6736-4353-a7ba-811a30976032",
+          "categoria_id": "d08286b8-5fa2-4547-a9a4-4160fcfd2e3c",
+          "nombre": "Primera 2026",
+          "director_tecnico": null,
+          "ayudante_tecnico": null,
+          "preparador_fisico": null,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null
+        }
+      ]
+    },
+    {
+      "name": "torneos_clubes",
+      "columns": [
+        {
+          "name": "torneo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "equipo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "zona",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "grupo",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "torneo_id",
+          "equipo_id"
+        ],
+        "name": "torneos_clubes_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_tc_equipo",
+          "constrained_columns": [
+            "equipo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "equipos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_tc_torneo",
+          "constrained_columns": [
+            "torneo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "torneos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_tc_equipo",
+          "unique": false,
+          "column_names": [
+            "equipo_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_tc_torneo",
+          "unique": false,
+          "column_names": [
+            "torneo_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    },
+    {
+      "name": "jugadores",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "comet_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "documento",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "apellido",
+          "type": "VARCHAR(120)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(120)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha_nacimiento",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "pais_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "ciudad_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "altura",
+          "type": "NUMERIC(4, 2)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "peso",
+          "type": "NUMERIC(5, 2)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "pierna_habil",
+          "type": "CHAR(1)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "foto_url",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "deleted_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "jugadores_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_jugador_ciudad",
+          "constrained_columns": [
+            "ciudad_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "ciudades",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_jugador_pais",
+          "constrained_columns": [
+            "pais_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "paises",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_jugador_apellido",
+          "unique": false,
+          "column_names": [
+            "apellido"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_jugador_apellido_lower",
+          "unique": false,
+          "column_names": [
+            null
+          ],
+          "expressions": [
+            "lower(apellido::text)"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_jugador_comet",
+          "unique": false,
+          "column_names": [
+            "comet_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_jugador_fecha_nacimiento",
+          "unique": false,
+          "column_names": [
+            "fecha_nacimiento"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_jugador_nombre",
+          "unique": false,
+          "column_names": [
+            "apellido",
+            "nombre"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_jugador_pais",
+          "unique": false,
+          "column_names": [
+            "pais_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "3ef3c020-585a-449f-b148-7c7d43dd4bd1",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "Garc\u00eda",
+          "nombre": "Juan",
+          "fecha_nacimiento": "2004-05-12",
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": "D",
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "e8565323-8940-43fb-9762-fedddb0cbcf2",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "Mart\u00ednez",
+          "nombre": "Lucas",
+          "fecha_nacimiento": "2005-08-20",
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": "I",
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "051762c6-8e3a-489d-894d-1591f4449d9e",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "Fern\u00e1ndez",
+          "nombre": "Tom\u00e1s",
+          "fecha_nacimiento": "2003-02-11",
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": "D",
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "35e594ee-12bc-4eba-be1f-7ad7f4fd74fa",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "L\u00f3pez",
+          "nombre": "Mat\u00edas",
+          "fecha_nacimiento": "2006-10-01",
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": "D",
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "400a1436-393d-4635-a76e-bdab9d890208",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "P\u00e9rez",
+          "nombre": "Franco",
+          "fecha_nacimiento": "2004-12-05",
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": "I",
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "83cc4c42-6b11-40d4-96c8-952cb18ac4c0",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "TestDelete",
+          "nombre": "Jugador",
+          "fecha_nacimiento": null,
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": null,
+          "foto_url": null,
+          "activo": false,
+          "created_at": "2026-07-24 13:52:04.467019",
+          "updated_at": "2026-07-24 13:52:06.744212",
+          "deleted_at": "2026-07-24 13:52:06.744212"
+        },
+        {
+          "id": "8ae5ebdc-7d53-43e3-ae64-8717370ad5e3",
+          "comet_id": 11,
+          "documento": "21626777",
+          "apellido": "I\u00f1arrea",
+          "nombre": "Esteban",
+          "fecha_nacimiento": "1979-09-18",
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": "0.00",
+          "peso": "0.00",
+          "pierna_habil": "D",
+          "foto_url": "string",
+          "activo": false,
+          "created_at": "2026-07-23 22:14:51.771756",
+          "updated_at": "2026-07-24 13:54:46.741693",
+          "deleted_at": "2026-07-24 13:54:46.741693"
+        },
+        {
+          "id": "d5d765c6-5f09-4f50-8a6e-86b0f9d19b79",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "TestUpdate",
+          "nombre": "Jugador",
+          "fecha_nacimiento": null,
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": null,
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-24 13:56:31.738124",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "54245197-4bb8-436f-ab84-39e8491649ac",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "TestUpdate",
+          "nombre": "Jugador",
+          "fecha_nacimiento": null,
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": "D",
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-24 13:56:52.745089",
+          "updated_at": "2026-07-24 13:56:54.473448",
+          "deleted_at": null
+        },
+        {
+          "id": "b8aa61aa-343e-44cf-beb7-f7d2d7cdb216",
+          "comet_id": 11,
+          "documento": "21626777",
+          "apellido": "I\u00f1arrea",
+          "nombre": "Esteban",
+          "fecha_nacimiento": "1979-09-18",
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": "0.00",
+          "peso": "0.00",
+          "pierna_habil": "D",
+          "foto_url": "string",
+          "activo": false,
+          "created_at": "2026-07-23 22:13:56.241212",
+          "updated_at": "2026-07-24 14:12:30.801135",
+          "deleted_at": "2026-07-24 14:12:30.801135"
+        },
+        {
+          "id": "5581e610-abe0-44d1-98f8-904bb5c8ab84",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "TestPos",
+          "nombre": "Jugador",
+          "fecha_nacimiento": null,
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": null,
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-24 14:33:52.199702",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "239744eb-ab70-4885-80e3-55e59c7d2ccb",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "TestPos",
+          "nombre": "Jugador",
+          "fecha_nacimiento": null,
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": null,
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-24 14:34:24.251300",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "3ed94c4e-814b-40f8-ab14-f1a6927159fe",
+          "comet_id": null,
+          "documento": null,
+          "apellido": "TestPos",
+          "nombre": "Jugador",
+          "fecha_nacimiento": null,
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": null,
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-24 14:34:40.958973",
+          "updated_at": null,
+          "deleted_at": null
+        },
+        {
+          "id": "1cf56955-329c-4377-a120-a3f1f98d7889",
+          "comet_id": null,
+          "documento": "123",
+          "apellido": "User",
+          "nombre": "Test",
+          "fecha_nacimiento": null,
+          "pais_id": null,
+          "ciudad_id": null,
+          "altura": null,
+          "peso": null,
+          "pierna_habil": "D",
+          "foto_url": null,
+          "activo": true,
+          "created_at": "2026-07-24 17:46:56.608700",
+          "updated_at": null,
+          "deleted_at": null
+        }
+      ]
+    },
+    {
+      "name": "jugadores_posiciones",
+      "columns": [
+        {
+          "name": "jugador_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "posicion_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "principal",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "false",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "prioridad",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": "1",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "jugador_id",
+          "posicion_id"
+        ],
+        "name": "jugadores_posiciones_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_jp_jugador",
+          "constrained_columns": [
+            "jugador_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "jugadores",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_jp_posicion",
+          "constrained_columns": [
+            "posicion_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "posiciones",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_jugador_posicion_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_jugador_posicion_posicion",
+          "unique": false,
+          "column_names": [
+            "posicion_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "jugador_id": "3ef3c020-585a-449f-b148-7c7d43dd4bd1",
+          "posicion_id": "d5d52205-4ef2-4246-87a0-c4bcd0c5a99d",
+          "principal": true,
+          "prioridad": 1
+        },
+        {
+          "jugador_id": "e8565323-8940-43fb-9762-fedddb0cbcf2",
+          "posicion_id": "1fe44548-949e-4a41-8d08-ce593cf48255",
+          "principal": true,
+          "prioridad": 1
+        },
+        {
+          "jugador_id": "051762c6-8e3a-489d-894d-1591f4449d9e",
+          "posicion_id": "cbc21b90-8801-41ba-bade-b8320b71dee5",
+          "principal": true,
+          "prioridad": 1
+        },
+        {
+          "jugador_id": "35e594ee-12bc-4eba-be1f-7ad7f4fd74fa",
+          "posicion_id": "51fbeb76-be2a-41d0-b0b9-2dab0b3e7f94",
+          "principal": true,
+          "prioridad": 1
+        },
+        {
+          "jugador_id": "400a1436-393d-4635-a76e-bdab9d890208",
+          "posicion_id": "5a4fd1ce-caa7-4e31-9b0d-64919fad46bb",
+          "principal": true,
+          "prioridad": 1
+        },
+        {
+          "jugador_id": "3ed94c4e-814b-40f8-ab14-f1a6927159fe",
+          "posicion_id": "d5d52205-4ef2-4246-87a0-c4bcd0c5a99d",
+          "principal": true,
+          "prioridad": 1
+        },
+        {
+          "jugador_id": "3ed94c4e-814b-40f8-ab14-f1a6927159fe",
+          "posicion_id": "1fe44548-949e-4a41-8d08-ce593cf48255",
+          "principal": false,
+          "prioridad": 1
+        },
+        {
+          "jugador_id": "1cf56955-329c-4377-a120-a3f1f98d7889",
+          "posicion_id": "d5d52205-4ef2-4246-87a0-c4bcd0c5a99d",
+          "principal": true,
+          "prioridad": 1
+        }
+      ]
+    },
+    {
+      "name": "posiciones",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "codigo",
+          "type": "VARCHAR(10)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(80)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "orden",
+          "type": "SMALLINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "posiciones_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "posiciones_codigo_key",
+          "unique": true,
+          "column_names": [
+            "codigo"
+          ],
+          "duplicates_constraint": "posiciones_codigo_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "d5d52205-4ef2-4246-87a0-c4bcd0c5a99d",
+          "codigo": "ARQ",
+          "nombre": "Arquero",
+          "orden": 1
+        },
+        {
+          "id": "cb59bf16-8c3a-42a5-a665-7c180bce871e",
+          "codigo": "LD",
+          "nombre": "Lateral Derecho",
+          "orden": 2
+        },
+        {
+          "id": "1fe44548-949e-4a41-8d08-ce593cf48255",
+          "codigo": "DFC",
+          "nombre": "Defensor Central",
+          "orden": 3
+        },
+        {
+          "id": "f403d21e-c07b-41ee-b514-597f7424c43c",
+          "codigo": "LI",
+          "nombre": "Lateral Izquierdo",
+          "orden": 4
+        },
+        {
+          "id": "cbc21b90-8801-41ba-bade-b8320b71dee5",
+          "codigo": "MC",
+          "nombre": "Mediocampista Central",
+          "orden": 5
+        },
+        {
+          "id": "6e4a22ce-dd29-4020-883e-7fe3c4c5e716",
+          "codigo": "MCD",
+          "nombre": "Mediocampista Defensivo",
+          "orden": 6
+        },
+        {
+          "id": "85231f7f-714b-4d10-a226-0769bafc3ddd",
+          "codigo": "MCO",
+          "nombre": "Mediocampista Ofensivo",
+          "orden": 7
+        },
+        {
+          "id": "51fbeb76-be2a-41d0-b0b9-2dab0b3e7f94",
+          "codigo": "ED",
+          "nombre": "Extremo Derecho",
+          "orden": 8
+        },
+        {
+          "id": "d7b3310d-c7fb-4e92-9408-c423a1f70ffe",
+          "codigo": "EI",
+          "nombre": "Extremo Izquierdo",
+          "orden": 9
+        },
+        {
+          "id": "cbd38293-f762-4096-9d5e-4d9e2fe71501",
+          "codigo": "MP",
+          "nombre": "Mediapunta",
+          "orden": 10
+        },
+        {
+          "id": "5a4fd1ce-caa7-4e31-9b0d-64919fad46bb",
+          "codigo": "DC",
+          "nombre": "Delantero Centro",
+          "orden": 11
+        }
+      ]
+    },
+    {
+      "name": "planteles",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "equipo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "jugador_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "dorsal",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha_desde",
+          "type": "DATE",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha_hasta",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "planteles_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_plantel_equipo",
+          "constrained_columns": [
+            "equipo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "equipos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_plantel_jugador",
+          "constrained_columns": [
+            "jugador_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "jugadores",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_plantel_equipo",
+          "unique": false,
+          "column_names": [
+            "equipo_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_plantel_equipo_activo",
+          "unique": false,
+          "column_names": [
+            "equipo_id",
+            "activo"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_plantel_historial",
+          "unique": false,
+          "column_names": [
+            "jugador_id",
+            "fecha_desde",
+            "fecha_hasta"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_plantel_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_plantel_jugador_activo",
+          "unique": false,
+          "column_names": [
+            "jugador_id",
+            "activo"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "e23fbb9b-edb9-4185-97ca-62bbd1e13e48",
+          "equipo_id": "5772ad18-b80e-4ef7-b9b2-ead75897350c",
+          "jugador_id": "3ef3c020-585a-449f-b148-7c7d43dd4bd1",
+          "dorsal": 1,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "a3a8f869-ba97-4f85-af30-ee980837050b",
+          "equipo_id": "5772ad18-b80e-4ef7-b9b2-ead75897350c",
+          "jugador_id": "e8565323-8940-43fb-9762-fedddb0cbcf2",
+          "dorsal": 2,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "bc44b867-8f28-4a2e-9289-208366f803ac",
+          "equipo_id": "5772ad18-b80e-4ef7-b9b2-ead75897350c",
+          "jugador_id": "051762c6-8e3a-489d-894d-1591f4449d9e",
+          "dorsal": 3,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "283de06a-c56d-497e-9e91-9e73ccccbed5",
+          "equipo_id": "5772ad18-b80e-4ef7-b9b2-ead75897350c",
+          "jugador_id": "35e594ee-12bc-4eba-be1f-7ad7f4fd74fa",
+          "dorsal": 4,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "90135892-775c-4f83-86c6-7b28f9ee5a99",
+          "equipo_id": "5772ad18-b80e-4ef7-b9b2-ead75897350c",
+          "jugador_id": "400a1436-393d-4635-a76e-bdab9d890208",
+          "dorsal": 5,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "c922b979-62db-4b2a-b02e-f741c818872f",
+          "equipo_id": "1fca6d9d-3275-47fc-a8b3-90cdcaf13416",
+          "jugador_id": "3ef3c020-585a-449f-b148-7c7d43dd4bd1",
+          "dorsal": 6,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "796bda92-1433-427e-814e-7be8533974b8",
+          "equipo_id": "1fca6d9d-3275-47fc-a8b3-90cdcaf13416",
+          "jugador_id": "e8565323-8940-43fb-9762-fedddb0cbcf2",
+          "dorsal": 7,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "bb87994d-4b7e-4ad0-a42e-578cc3fbb9ee",
+          "equipo_id": "1fca6d9d-3275-47fc-a8b3-90cdcaf13416",
+          "jugador_id": "051762c6-8e3a-489d-894d-1591f4449d9e",
+          "dorsal": 8,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "462d989c-2159-453a-9ec1-0e2b038d65b5",
+          "equipo_id": "1fca6d9d-3275-47fc-a8b3-90cdcaf13416",
+          "jugador_id": "35e594ee-12bc-4eba-be1f-7ad7f4fd74fa",
+          "dorsal": 9,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "19f78d80-512d-4fe3-8b11-3c888aa311d6",
+          "equipo_id": "1fca6d9d-3275-47fc-a8b3-90cdcaf13416",
+          "jugador_id": "400a1436-393d-4635-a76e-bdab9d890208",
+          "dorsal": 10,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "8ef9e8f8-5ccc-406d-b217-8a56d8f03c83",
+          "equipo_id": "a3693c5b-3eed-4270-8e94-62f3b2d08da5",
+          "jugador_id": "3ef3c020-585a-449f-b148-7c7d43dd4bd1",
+          "dorsal": 11,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "952f9ede-1153-41f9-b62f-d9fea45b42dd",
+          "equipo_id": "a3693c5b-3eed-4270-8e94-62f3b2d08da5",
+          "jugador_id": "e8565323-8940-43fb-9762-fedddb0cbcf2",
+          "dorsal": 12,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "9edb93ea-a932-4b8c-82d7-f9404dca912a",
+          "equipo_id": "a3693c5b-3eed-4270-8e94-62f3b2d08da5",
+          "jugador_id": "051762c6-8e3a-489d-894d-1591f4449d9e",
+          "dorsal": 13,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "fb848f00-7b14-48c6-995c-99363ec7c1f3",
+          "equipo_id": "a3693c5b-3eed-4270-8e94-62f3b2d08da5",
+          "jugador_id": "35e594ee-12bc-4eba-be1f-7ad7f4fd74fa",
+          "dorsal": 14,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        },
+        {
+          "id": "7967a42d-1e87-47f2-a9c6-d1bcdb62a8ca",
+          "equipo_id": "a3693c5b-3eed-4270-8e94-62f3b2d08da5",
+          "jugador_id": "400a1436-393d-4635-a76e-bdab9d890208",
+          "dorsal": 15,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": null,
+          "activo": true,
+          "created_at": "2026-07-22 13:33:45.015738"
+        }
+      ]
+    },
+    {
+      "name": "partido_jugadores",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "partido_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "jugador_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "equipo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "numero_camiseta",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "titular",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "false",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "capitan",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "false",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "posicion_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "minuto_entrada",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": "0",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "minuto_salida",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "minutos_jugados",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "observacion",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "partido_jugadores_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_pj_equipo",
+          "constrained_columns": [
+            "equipo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "equipos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_pj_jugador",
+          "constrained_columns": [
+            "jugador_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "jugadores",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_pj_partido",
+          "constrained_columns": [
+            "partido_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "partidos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_pj_posicion",
+          "constrained_columns": [
+            "posicion_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "posiciones",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_partido_jugador_equipo",
+          "unique": false,
+          "column_names": [
+            "equipo_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_partido_jugador_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_partido_jugador_partido",
+          "unique": false,
+          "column_names": [
+            "partido_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_pj_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_pj_partido",
+          "unique": false,
+          "column_names": [
+            "partido_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    },
+    {
+      "name": "formaciones",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "partido_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "equipo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "esquema",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "observaciones",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "formaciones_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_formacion_equipo",
+          "constrained_columns": [
+            "equipo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "equipos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_formacion_partido",
+          "constrained_columns": [
+            "partido_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "partidos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_formacion_equipo",
+          "unique": false,
+          "column_names": [
+            "equipo_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_formacion_partido",
+          "unique": false,
+          "column_names": [
+            "partido_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    },
+    {
+      "name": "formacion_jugadores",
+      "columns": [
+        {
+          "name": "formacion_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "jugador_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "posicion_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "ubicacion",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "orden",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "formacion_id",
+          "jugador_id"
+        ],
+        "name": "formacion_jugadores_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_fj_formacion",
+          "constrained_columns": [
+            "formacion_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "formaciones",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_fj_jugador",
+          "constrained_columns": [
+            "jugador_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "jugadores",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_fj_posicion",
+          "constrained_columns": [
+            "posicion_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "posiciones",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [],
+      "rows": []
+    },
+    {
+      "name": "scouts",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "usuario_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(120)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "apellido",
+          "type": "VARCHAR(120)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "telefono",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "email",
+          "type": "VARCHAR(150)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "scouts_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_scout_usuario",
+          "constrained_columns": [
+            "usuario_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "usuarios",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_scout_usuario",
+          "unique": false,
+          "column_names": [
+            "usuario_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    },
+    {
+      "name": "arbitros",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "apellido",
+          "type": "VARCHAR(120)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(120)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "documento",
+          "type": "VARCHAR(30)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "liga_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "arbitros_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_arbitro_liga",
+          "constrained_columns": [
+            "liga_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "ligas",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_arbitro_liga",
+          "unique": false,
+          "column_names": [
+            "liga_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    },
+    {
+      "name": "partidos",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "comet_id",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "torneo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha",
+          "type": "DATE",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "hora",
+          "type": "TIME",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "cancha_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "local_equipo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "visitante_equipo_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "arbitro_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "estado_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "goles_local",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": "0",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "goles_visitante",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": "0",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "observaciones",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "updated_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "partidos_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_partido_arbitro",
+          "constrained_columns": [
+            "arbitro_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "arbitros",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_partido_cancha",
+          "constrained_columns": [
+            "cancha_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "canchas",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_partido_estado",
+          "constrained_columns": [
+            "estado_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "estados_partido",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_partido_local",
+          "constrained_columns": [
+            "local_equipo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "equipos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_partido_torneo",
+          "constrained_columns": [
+            "torneo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "torneos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_partido_visitante",
+          "constrained_columns": [
+            "visitante_equipo_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "equipos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_partido_estado",
+          "unique": false,
+          "column_names": [
+            "estado_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_partido_fecha",
+          "unique": false,
+          "column_names": [
+            "fecha"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_partido_local",
+          "unique": false,
+          "column_names": [
+            "local_equipo_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_partido_torneo",
+          "unique": false,
+          "column_names": [
+            "torneo_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_partido_torneo_fecha",
+          "unique": false,
+          "column_names": [
+            "torneo_id",
+            "fecha"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_partido_visitante",
+          "unique": false,
+          "column_names": [
+            "visitante_equipo_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "2eaf3c0e-c9d2-44b2-abe5-dbbfaf1d5dac",
+          "comet_id": null,
+          "torneo_id": "a04ee388-48d7-481a-88b5-0257f75f9579",
+          "fecha": "2026-04-10",
+          "hora": "16:00:00",
+          "cancha_id": null,
+          "local_equipo_id": "5772ad18-b80e-4ef7-b9b2-ead75897350c",
+          "visitante_equipo_id": "1fca6d9d-3275-47fc-a8b3-90cdcaf13416",
+          "arbitro_id": null,
+          "estado_id": "6cd10806-6455-4bc3-b109-bda15be14b34",
+          "goles_local": 2,
+          "goles_visitante": 1,
+          "observaciones": null,
+          "created_at": "2026-07-22 13:33:45.015738",
+          "updated_at": null
+        }
+      ]
+    },
+    {
+      "name": "estados_partido",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "codigo",
+          "type": "VARCHAR(30)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "descripcion",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "estados_partido_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "estados_partido_codigo_key",
+          "unique": true,
+          "column_names": [
+            "codigo"
+          ],
+          "duplicates_constraint": "estados_partido_codigo_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "0e2bc928-deea-4cbe-85a3-691224101659",
+          "codigo": "PROGRAMADO",
+          "descripcion": "Partido programado"
+        },
+        {
+          "id": "c3bf0428-c07c-4ebd-8ca6-6c707b6c9d85",
+          "codigo": "EN_JUEGO",
+          "descripcion": "Partido en disputa"
+        },
+        {
+          "id": "6cd10806-6455-4bc3-b109-bda15be14b34",
+          "codigo": "FINALIZADO",
+          "descripcion": "Partido finalizado"
+        },
+        {
+          "id": "a976b301-73dd-4e24-8d7c-a0d908da9c2b",
+          "codigo": "SUSPENDIDO",
+          "descripcion": "Partido suspendido"
+        },
+        {
+          "id": "dd10f298-494a-497f-bc12-b6f0eddefafc",
+          "codigo": "POSTERGADO",
+          "descripcion": "Partido postergado"
+        }
+      ]
+    },
+    {
+      "name": "criterios_evaluacion",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "codigo",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "descripcion",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "valor_min",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": "1",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "valor_max",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": "10",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "activo",
+          "type": "BOOLEAN",
+          "nullable": true,
+          "default": "true",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "criterios_evaluacion_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "criterios_evaluacion_codigo_key",
+          "unique": true,
+          "column_names": [
+            "codigo"
+          ],
+          "duplicates_constraint": "criterios_evaluacion_codigo_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "b8225900-9247-44bd-aaf9-223346894f72",
+          "codigo": "TECNICA",
+          "nombre": "T\u00e9cnica",
+          "descripcion": "Control, pase, conducci\u00f3n y dominio del bal\u00f3n",
+          "valor_min": 1,
+          "valor_max": 10,
+          "activo": true
+        },
+        {
+          "id": "029d1115-7a7c-4a24-bea2-2c0d0aeda652",
+          "codigo": "FISICO",
+          "nombre": "F\u00edsico",
+          "descripcion": "Velocidad, resistencia y potencia",
+          "valor_min": 1,
+          "valor_max": 10,
+          "activo": true
+        },
+        {
+          "id": "96287dd2-fa7f-428e-9bb6-9eb34982d954",
+          "codigo": "TACTICO",
+          "nombre": "T\u00e1ctico",
+          "descripcion": "Lectura del juego y posicionamiento",
+          "valor_min": 1,
+          "valor_max": 10,
+          "activo": true
+        },
+        {
+          "id": "d0bc4e68-99c3-4cf7-b871-eaef0b968543",
+          "codigo": "MENTAL",
+          "nombre": "Mentalidad",
+          "descripcion": "Actitud, concentraci\u00f3n y toma de decisiones",
+          "valor_min": 1,
+          "valor_max": 10,
+          "activo": true
+        },
+        {
+          "id": "672938b9-64d5-4fab-a37a-c5ab37c347fc",
+          "codigo": "POTENCIAL",
+          "nombre": "Potencial",
+          "descripcion": "Proyecci\u00f3n futura del jugador",
+          "valor_min": 1,
+          "valor_max": 10,
+          "activo": true
+        }
+      ]
+    },
+    {
+      "name": "informes_scouting",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "jugador_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "scout_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "titulo",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "resumen",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fortalezas",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "debilidades",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "recomendacion",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "potencial",
+          "type": "SMALLINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha",
+          "type": "DATE",
+          "nullable": true,
+          "default": "CURRENT_DATE",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "informes_scouting_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_informe_jugador",
+          "constrained_columns": [
+            "jugador_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "jugadores",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_informe_scout",
+          "constrained_columns": [
+            "scout_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "scouts",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_informe_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_informe_scout",
+          "unique": false,
+          "column_names": [
+            "scout_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "de24a6f1-9c99-473d-b798-7195e3218ca1",
+          "jugador_id": "051762c6-8e3a-489d-894d-1591f4449d9e",
+          "scout_id": null,
+          "titulo": "Informe inicial",
+          "resumen": "Jugador observado durante competencia oficial",
+          "fortalezas": "Buen control y lectura del juego",
+          "debilidades": "Debe mejorar f\u00edsico",
+          "recomendacion": "Seguimiento recomendado",
+          "potencial": 8,
+          "fecha": "2026-07-22",
+          "created_at": "2026-07-22 13:33:45.015738"
+        }
+      ]
+    },
+    {
+      "name": "videos",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "jugador_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "partido_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "titulo",
+          "type": "VARCHAR(200)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "url",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "tipo",
+          "type": "VARCHAR(50)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "descripcion",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "fecha",
+          "type": "DATE",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "videos_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_video_jugador",
+          "constrained_columns": [
+            "jugador_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "jugadores",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_video_partido",
+          "constrained_columns": [
+            "partido_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "partidos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_video_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_video_partido",
+          "unique": false,
+          "column_names": [
+            "partido_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    },
+    {
+      "name": "archivos_adjuntos",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "jugador_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "informe_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre_archivo",
+          "type": "VARCHAR(255)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "ruta",
+          "type": "TEXT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "extension",
+          "type": "VARCHAR(20)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "tama\u00f1o",
+          "type": "BIGINT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "archivos_adjuntos_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_archivo_informe",
+          "constrained_columns": [
+            "informe_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "informes_scouting",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_archivo_jugador",
+          "constrained_columns": [
+            "jugador_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "jugadores",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_archivo_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    },
+    {
+      "name": "tipos_superficie",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "tipos_superficie_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "tipos_superficie_nombre_key",
+          "unique": true,
+          "column_names": [
+            "nombre"
+          ],
+          "duplicates_constraint": "tipos_superficie_nombre_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "79a38245-0903-47db-85e6-3b25e48ba8de",
+          "nombre": "C\u00e9sped natural"
+        },
+        {
+          "id": "b1fcaad6-3ffa-4b1e-bccd-c566c2eafb8b",
+          "nombre": "C\u00e9sped sint\u00e9tico"
+        },
+        {
+          "id": "66d13a71-6c92-42c2-8922-d9ae94f146f3",
+          "nombre": "Tierra"
+        },
+        {
+          "id": "491d26b7-3fbe-4662-9349-7109b7131bb3",
+          "nombre": "Mixta"
+        }
+      ]
+    },
+    {
+      "name": "piernas_habiles",
+      "columns": [
+        {
+          "name": "codigo",
+          "type": "CHAR(1)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "descripcion",
+          "type": "VARCHAR(50)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "codigo"
+        ],
+        "name": "piernas_habiles_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [],
+      "rows": [
+        {
+          "codigo": "D",
+          "descripcion": "Derecha"
+        },
+        {
+          "codigo": "I",
+          "descripcion": "Izquierda"
+        },
+        {
+          "codigo": "A",
+          "descripcion": "Ambas"
+        }
+      ]
+    },
+    {
+      "name": "paises",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "nombre",
+          "type": "VARCHAR(100)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "codigo_iso2",
+          "type": "CHAR(2)",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "codigo_iso3",
+          "type": "CHAR(3)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "codigo_fifa",
+          "type": "CHAR(3)",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "paises_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [],
+      "indexes": [
+        {
+          "name": "paises_codigo_iso2_key",
+          "unique": true,
+          "column_names": [
+            "codigo_iso2"
+          ],
+          "duplicates_constraint": "paises_codigo_iso2_key",
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": [
+        {
+          "id": "390fc4e8-980f-44e9-a3fb-d65c06789113",
+          "nombre": "Argentina",
+          "codigo_iso2": "AR",
+          "codigo_iso3": "ARG",
+          "codigo_fifa": "ARG",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "a1d28e7f-4a83-4f81-be03-7867cf33b743",
+          "nombre": "Uruguay",
+          "codigo_iso2": "UY",
+          "codigo_iso3": "URY",
+          "codigo_fifa": "URU",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "d2f7d0f3-797f-4b96-9862-ea6aa959e434",
+          "nombre": "Brasil",
+          "codigo_iso2": "BR",
+          "codigo_iso3": "BRA",
+          "codigo_fifa": "BRA",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "8eb9cd27-ea33-4f16-8b45-400b05eda073",
+          "nombre": "Chile",
+          "codigo_iso2": "CL",
+          "codigo_iso3": "CHL",
+          "codigo_fifa": "CHI",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "1b6d9aab-a59b-4f0f-bf69-473c241bc7dd",
+          "nombre": "Paraguay",
+          "codigo_iso2": "PY",
+          "codigo_iso3": "PRY",
+          "codigo_fifa": "PAR",
+          "created_at": "2026-07-22 13:32:41.677164"
+        },
+        {
+          "id": "a6818c30-e908-4c46-8c39-bd14859e83a3",
+          "nombre": "Espa\u00f1a",
+          "codigo_iso2": "ES",
+          "codigo_iso3": "ESP",
+          "codigo_fifa": "ESP",
+          "created_at": "2026-07-22 13:32:41.677164"
+        }
+      ]
+    },
+    {
+      "name": "evaluaciones_jugador",
+      "columns": [
+        {
+          "name": "id",
+          "type": "UUID",
+          "nullable": false,
+          "default": "gen_random_uuid()",
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "jugador_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "partido_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "scout_id",
+          "type": "UUID",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "criterio_id",
+          "type": "UUID",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "valor",
+          "type": "SMALLINT",
+          "nullable": false,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "comentario",
+          "type": "TEXT",
+          "nullable": true,
+          "default": null,
+          "autoincrement": false,
+          "comment": null
+        },
+        {
+          "name": "created_at",
+          "type": "TIMESTAMP",
+          "nullable": true,
+          "default": "CURRENT_TIMESTAMP",
+          "autoincrement": false,
+          "comment": null
+        }
+      ],
+      "primary_key": {
+        "constrained_columns": [
+          "id"
+        ],
+        "name": "evaluaciones_jugador_pkey",
+        "comment": null,
+        "dialect_options": {
+          "postgresql_include": []
+        }
+      },
+      "foreign_keys": [
+        {
+          "name": "fk_eval_criterio",
+          "constrained_columns": [
+            "criterio_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "criterios_evaluacion",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_eval_jugador",
+          "constrained_columns": [
+            "jugador_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "jugadores",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_eval_partido",
+          "constrained_columns": [
+            "partido_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "partidos",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        },
+        {
+          "name": "fk_eval_scout",
+          "constrained_columns": [
+            "scout_id"
+          ],
+          "referred_schema": "public",
+          "referred_table": "scouts",
+          "referred_columns": [
+            "id"
+          ],
+          "options": {},
+          "comment": null
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_eval_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_eval_partido",
+          "unique": false,
+          "column_names": [
+            "partido_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_evaluacion_criterio",
+          "unique": false,
+          "column_names": [
+            "criterio_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_evaluacion_jugador",
+          "unique": false,
+          "column_names": [
+            "jugador_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        },
+        {
+          "name": "idx_evaluacion_partido",
+          "unique": false,
+          "column_names": [
+            "partido_id"
+          ],
+          "include_columns": [],
+          "dialect_options": {
+            "postgresql_include": []
+          }
+        }
+      ],
+      "rows": []
+    }
+  ]
+}

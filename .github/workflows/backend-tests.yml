@@ -1,0 +1,98 @@
+name: Backend Tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * 1'
+
+jobs:
+  smoke-no-regression:
+    name: Smoke No Regression
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: scouting_test
+          POSTGRES_USER: scouting
+          POSTGRES_PASSWORD: scouting
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U scouting -d scouting_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql+psycopg2://scouting:scouting@127.0.0.1:5432/scouting_test
+      JWT_SECRET_KEY: ci-secret-key
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Enable pgcrypto extension
+        run: |
+          python -c "import psycopg2; conn=psycopg2.connect(dbname='scouting_test', user='scouting', password='scouting', host='127.0.0.1', port=5432); cur=conn.cursor(); cur.execute('CREATE EXTENSION IF NOT EXISTS pgcrypto'); conn.commit(); cur.close(); conn.close()"
+
+      - name: Create schema
+        run: python create_tables.py
+
+      - name: Run smoke no regression suite
+        run: python -m pytest -m no_regression -q
+
+  full-suite:
+    name: Full Suite
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: scouting_test
+          POSTGRES_USER: scouting
+          POSTGRES_PASSWORD: scouting
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U scouting -d scouting_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql+psycopg2://scouting:scouting@127.0.0.1:5432/scouting_test
+      JWT_SECRET_KEY: ci-secret-key
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Enable pgcrypto extension
+        run: |
+          python -c "import psycopg2; conn=psycopg2.connect(dbname='scouting_test', user='scouting', password='scouting', host='127.0.0.1', port=5432); cur=conn.cursor(); cur.execute('CREATE EXTENSION IF NOT EXISTS pgcrypto'); conn.commit(); cur.close(); conn.close()"
+
+      - name: Create schema
+        run: python create_tables.py
+
+      - name: Run full suite
+        run: python -m pytest -q
